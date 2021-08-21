@@ -9,25 +9,18 @@ export const SignUp = () => {
         e.preventDefault();
         let item=({username,password,login_pin})
         console.log(item);
-          let url="http://192.34.56.14/v1/registration/user";
-             fetch(url,{
-             method:"POST",
-             headers:{
-                "X-Api-Key":"usf-user",
-               "Content-Type":"application/json"
-               
-             },
-             body:{
-                login_pin: "3456",
-                password: "xyz@123",
-                username: "xyz123"
-             }
-             })
-            .then(res=>{
-               
-                    console.warn("data",res);
-             
-            })
+        let url="http://192.34.56.14/v1/registration/user";
+        fetch(url, {
+          method: 'post',
+          headers: {
+            Accept: 'application/json', 'Content-Type': 'application/json', 'X-Api-Key': 'usf-user',
+          },
+          body: JSON.stringify(item)
+        }).then(function(response) {
+          return response.json();
+        }).then(function(data) {
+          console.log('Created Gist:', data);
+        });
             
         //       } 
         //   })
