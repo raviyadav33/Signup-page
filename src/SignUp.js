@@ -1,27 +1,47 @@
 import React,{useState} from "react";
+
 export const SignUp = () => {
    
     // const[employee_id,setEmployeeid]=useState("");
     const[username,setUsername]=useState("");
     const[password,setPassword]=useState("");
     const[login_pin,setLogin_pin]=useState("");
+    const[verification,setVerification]=useState(false);
     async function signup(e){
         e.preventDefault();
-        let item=({username,password,login_pin})
+        let item=({username,password,login_pin,verification})
         console.log(item);
         let url="http://192.34.56.14/v1/registration/user";
-        fetch(url, {
-          method: 'post',
-          headers: {
-            Accept: 'application/json', 'Content-Type': 'application/json', 'X-Api-Key': 'usf-user',
-          },
-          body: JSON.stringify(item)
-        }).then(function(response) {
-          return response.json();
-        }).then(function(data) {
-          console.log('Created Gist:', data);
-        });
-            
+        // fetch(url, {
+        //   method: 'post',
+        //   headers: {
+        //     Accept: 'application/json', 'Content-Type': 'application/json', 'X-Api-Key': 'usf-user',
+        //   },
+        //   body: JSON.stringify(item)
+        // }).then(function(response) {
+        //   if(!response.ok){
+        //     throw Error(response.statusText);
+        //   }
+        //   return response.json();
+        // }).then(function(data) {
+        //   console.log('Created Gist:', data);
+        // }).catch((error)=>{
+        //   alert(error);
+        // })
+          const data=await fetch(url,{
+            method:"POST",
+            headers:{
+              Accept: 'application/json', 'Content-Type': 'application/json', 'X-Api-Key': 'usf-user',
+            },
+            body:JSON.stringify(item)
+          })
+          const myJson=await data.json()
+            console.log(myJson);
+             if(myJson.success){
+               setVerification(true);
+             }else{
+                alert(myJson.message)
+             }
         //       } 
         //   })
         //   results= await results.json();
